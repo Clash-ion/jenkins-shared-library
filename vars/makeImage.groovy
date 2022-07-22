@@ -1,4 +1,4 @@
-def call() {
+def call(String imageName) {
     echo 'building image ...'
     withCredentials([
         usernamePassword(
@@ -7,8 +7,8 @@ def call() {
             passwordVariable: 'PASS'
         )
     ]) {
-        sh 'docker build -t  clashia/java-maven-app:jma-2.0 .'
-        sh 'echo $PASS | docker login -u $USER --password-stdin'
-        sh 'docker push clashia/java-maven-app:jma-2.0'
+        sh "docker build -t  $imageName ."
+        sh "echo $PASS | docker login -u $USER --password-stdin"
+        sh "docker push $imageName"
     }
 }
