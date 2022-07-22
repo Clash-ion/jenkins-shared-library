@@ -1,14 +1,10 @@
+import com.example.Docker
+
 def call(String imageName) {
     echo 'building image ...'
-    withCredentials([
-        usernamePassword(
-            credentialsId: 'docker-hub',
-            usernameVariable: 'USER',
-            passwordVariable: 'PASS'
-        )
-    ]) {
-        sh "docker build -t  $imageName ."
-        sh "echo $PASS | docker login -u $USER --password-stdin"
-        sh "docker push $imageName"
-    }
+    def docker
+    docker = new Docker(this)
+    docker.dockerBuild(imageName)
+    docker.dockerLogin()
+    docker.dockerPush(imageName)
 }
