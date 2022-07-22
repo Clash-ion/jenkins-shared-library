@@ -7,4 +7,5 @@ def call(String imageName) {
     docker.dockerBuild(imageName)
     docker.dockerLogin()
     docker.dockerPush(imageName)
+    return docker
 }
